@@ -30,7 +30,7 @@ public class DebugUpdateVersionController {
     @PutMapping()
     @Operation(summary = "Update version of a concert")
     public Concert execute(String id) {
-        return usecase.execute("c53177a2-c5d4-4418-967b-27f322acc2f5", new ConcertVersion());
+        return usecase.execute(id, new ConcertVersion());
         
     }
 }
