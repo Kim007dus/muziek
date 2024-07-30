@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.kimraven.muziek.entities.Concert;
 import nl.kimraven.muziek.entities.Festival;
 import nl.kimraven.muziek.entities.gateway.MusicGateway;
@@ -16,6 +17,7 @@ import nl.kimraven.muziek.infrastructure.datasource.FestivalRepository;
 /**
  * 
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MusicGatewayImpl implements MusicGateway {
@@ -78,10 +80,23 @@ public class MusicGatewayImpl implements MusicGateway {
         return Optional.ofNullable(MusicMapper.toEntity(concertRepository.save(MusicMapper.toSchema(concert))));
 
     }
-
+    
     @Override
     public Optional<Festival> saveFestival(Festival festival) {
         return Optional.ofNullable(MusicMapper.toEntity(festivalRepository.save(MusicMapper.toSchema(festival))));
+    }
+    
+    @Override
+    public Optional<Concert> updateConcert(String id, Concert concert) {
+         return concertRepository.findById(id).map(existingConcert -> {
+            existingConcert.getHistory().add(existingConcert.getCurrent());
+            existingConcert.setCurrent(concert.getCurrent());
+            log.info("Updated concert with id: {}", id);
+
+            Concert savedConcert = MusicMapper.toEntity(concertRepository.save(existingConcert));
+            log.info("Updated concert: {}", savedConcert);        
+            return savedConcert;
+        });
     }
 
     // delete concert en festival uit de database

@@ -2,7 +2,6 @@ package nl.kimraven.muziek.usecases.concerts;
 
 import java.time.LocalDate;
 
-
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -42,28 +41,32 @@ public class ChangeStatusConcertUsecaseImpl implements ChangeStatusConcertUsecas
         var concert = gateway.findConcertById(id).orElseThrow(ConcertNotFoundException::new);
                
 
-        if (concert.getStatus() == Status.CANCELLED) {
+        if (concert.getCurrent().getStatus() == Status.CANCELLED) {
             throw new StatusCancelledException();
         }       
         
         LocalDate currentDate = LocalDate.now();
         Status newStatus;
         
-        if (concert.getDate().isEqual(currentDate)) {
+        if (concert.getCurrent().getDate().isEqual(currentDate)) {
             newStatus = Status.NOW;
-        } else if (concert.getDate().isBefore(currentDate)) {
+        } else if (concert.getCurrent().getDate().isBefore(currentDate)) {
             newStatus = Status.SEEN;
         } else {
             newStatus = Status.UPCOMING;
         }
         
-        log.info("Changing status of concert: {} to {}", concert.getStatus(), newStatus);
-        concert.setStatus(newStatus);
-        
+        log.info("Changing status of concert: {} to {}", concert.getCurrent().getStatus(), newStatus);
 
-        return gateway.saveConcert(concert).map(ConcertResponse::new).orElseThrow(AddConcertException::new);
+        concert.getCurrent().setStatus(newStatus);
+        concert.getCurrent().setVersion(concert.getCurrent().getVersion() + 1);
+
+        var update = gateway.updateConcert(id, concert).orElseThrow(AddConcertException::new);
         
-}
+        return new ConcertResponse(update);
+       
+        
+    }
 }
 
 

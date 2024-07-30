@@ -1,9 +1,9 @@
 package nl.kimraven.muziek.entities;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,22 +19,11 @@ public class Concert {
     String id;
 
     //
-    @Version
-    Long version;
-        
-    //
     @NotBlank
-    String artistName;
-
-    //
-    @NotBlank
-    String concertLocation;
-    
-    //
-    @NotBlank
-    LocalDate date;
+    ConcertVersion current;
 
     //
     @NotNull
-    Status status;
+    List<ConcertVersion> history = new ArrayList<>();
+
 }

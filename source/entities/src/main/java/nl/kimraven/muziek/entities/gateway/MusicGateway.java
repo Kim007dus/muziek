@@ -21,6 +21,7 @@ public interface MusicGateway  {
     Optional<Festival> findFestivalByName(String festivalName);
     
     Optional<Concert> saveConcert(Concert concert);
+    Optional<Concert> updateConcert(String id, Concert concert);
     Optional<Festival> saveFestival(Festival festival);
 
     void deleteConcert(Concert concert);

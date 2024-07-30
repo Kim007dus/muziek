@@ -32,7 +32,7 @@ public class AddConcertController {
     @PostMapping()
     @Operation(summary = "Add a concert")
     public ConcertResponse execute(String artistName, LocalDate date, String concertLocation) {
-        return usecase.execute(artistName, date, concertLocation);
+        return usecase.execute("Backstreet Boys", LocalDate.of(2020, 7, 4), "Amsterdam"	);
         
     }
 }

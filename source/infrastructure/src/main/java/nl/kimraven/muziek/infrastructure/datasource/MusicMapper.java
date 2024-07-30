@@ -3,6 +3,7 @@ package nl.kimraven.muziek.infrastructure.datasource;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
 import nl.kimraven.muziek.entities.Concert;
+import nl.kimraven.muziek.entities.ConcertVersion;
 import nl.kimraven.muziek.entities.Festival;
 import nl.kimraven.muziek.infrastructure.schema.ConcertSchema;
 import nl.kimraven.muziek.infrastructure.schema.FestivalSchema;
@@ -17,13 +18,21 @@ public abstract class MusicMapper {
         var entity = new Concert();
 
         entity.setId(schema.getId());
-        entity.setVersion(schema.getVersion());
+        entity.setCurrent(schema.getCurrent());
+        entity.setHistory(schema.getHistory());
+
+        return entity;
+        
+    }
+
+    public static ConcertVersion toEntityVersion(ConcertSchema schema) {
+        var entity = new ConcertVersion();
 
         entity.setArtistName(schema.getArtistName());
-        entity.setConcertLocation(schema.getConcertLocation());
         entity.setDate(schema.getDate());
+        entity.setConcertLocation(schema.getConcertLocation());
         entity.setStatus(schema.getStatus());
-
+        
         return entity;
         
     }
@@ -47,13 +56,21 @@ public abstract class MusicMapper {
         var schema = new ConcertSchema();
 
         schema.setId(entity.getId());
-        schema.setVersion(entity.getVersion());
+        schema.setCurrent(entity.getCurrent());
+        schema.setHistory(entity.getHistory());
+        
+        return schema;
+        
+    }
+
+    public static ConcertSchema toSchemaVersion(ConcertVersion entity) {
+        var schema = new ConcertSchema();
 
         schema.setArtistName(entity.getArtistName());
-        schema.setConcertLocation(entity.getConcertLocation());
         schema.setDate(entity.getDate());
+        schema.setConcertLocation(entity.getConcertLocation());
         schema.setStatus(entity.getStatus());
-
+                
         return schema;
         
     }
