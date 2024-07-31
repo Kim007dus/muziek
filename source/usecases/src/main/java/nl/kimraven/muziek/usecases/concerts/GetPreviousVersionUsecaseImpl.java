@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.kimraven.muziek.entities.Concert;
-import nl.kimraven.muziek.entities.ConcertVersion;
-import nl.kimraven.muziek.entities.dto.CurrentVersionResponse;
 import nl.kimraven.muziek.entities.dto.PreviousVersionResponse;
 import nl.kimraven.muziek.entities.exception.ConcertNotFoundException;
 import nl.kimraven.muziek.entities.gateway.MusicGateway;

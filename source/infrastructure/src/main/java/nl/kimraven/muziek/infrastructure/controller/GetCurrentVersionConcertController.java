@@ -1,6 +1,7 @@
 package nl.kimraven.muziek.infrastructure.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,10 +15,10 @@ import nl.kimraven.muziek.usecases.concerts.GetCurrentVersionUsecase;
 /**
  * 
  */
-@Tag(name = "1. Concert")
+@Tag(name = "Concerts")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/concerts/currentversion/{id}")
+@RequestMapping(value = "/api/concerts/{concert_id}/currentversion")
 public class GetCurrentVersionConcertController {
     //
     private final GetCurrentVersionUsecase usecase;
@@ -28,7 +29,7 @@ public class GetCurrentVersionConcertController {
      */
     @GetMapping()
     @Operation(summary = "Get current version of a concert")
-    public CurrentVersionResponse execute(String id) {
+    public CurrentVersionResponse execute(@PathVariable("concert_id") String id) {
         return usecase.execute(id);
         
     }

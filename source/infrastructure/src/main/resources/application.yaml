@@ -4,11 +4,7 @@ springdoc:
   swagger-ui:
     enabled: true
     use-root-path: true
-    csrf:
-      enabled: true
-    displayRequestDuration: true
-    operationsSorter: alpha
-    tagsSorter: alpha
+   
 spring:
   application:
     name: "Muziek API"

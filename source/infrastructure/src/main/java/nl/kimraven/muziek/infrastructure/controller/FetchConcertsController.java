@@ -17,10 +17,10 @@ import nl.kimraven.muziek.usecases.concerts.FetchConcertsUsecase;
 /**
  * 
  */
-@Tag(name = "1. Concerts")
+@Tag(name = "Concerts")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/concerts")
+@RequestMapping(value = "/api/concerts")
 public class FetchConcertsController {
     
     //

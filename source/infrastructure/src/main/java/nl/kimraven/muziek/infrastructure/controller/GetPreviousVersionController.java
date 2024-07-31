@@ -1,6 +1,7 @@
 package nl.kimraven.muziek.infrastructure.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,10 +14,10 @@ import nl.kimraven.muziek.usecases.concerts.GetPreviousVersionUsecase;
 /**
  * 
  */
-@Tag(name = "1. Concert")
+@Tag(name = "Concerts")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/concerts/previousversion/{id}")
+@RequestMapping(value = "/api/concerts/{concert_id}/previousversion")
 public class GetPreviousVersionController {
     
     //
@@ -30,7 +31,7 @@ public class GetPreviousVersionController {
      */
     @GetMapping()
     @Operation(summary = "Get previous version of a concert")
-    public PreviousVersionResponse execute(String id) {
+    public PreviousVersionResponse execute(@PathVariable("concert_id") String id) {
         return usecase.execute(id);    
       
     }

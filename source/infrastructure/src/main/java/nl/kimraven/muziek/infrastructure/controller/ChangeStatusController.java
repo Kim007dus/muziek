@@ -1,5 +1,6 @@
 package nl.kimraven.muziek.infrastructure.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,10 +14,10 @@ import nl.kimraven.muziek.usecases.concerts.ChangeStatusConcertUsecase;
 /**
  * 
  */
-@Tag(name = "2. Status")
+@Tag(name = "Status")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/concerts/status/{id}")
+@RequestMapping(value = "/api/concerts/{concert_id}/status")
 public class ChangeStatusController {
 
     //
@@ -27,8 +28,8 @@ public class ChangeStatusController {
      * @return
      */
     @PutMapping()
-    @Operation(summary = "Change status of a concert")
-    public ConcertResponse execute(String id) {
+    @Operation(summary = "Change status of a concert through date of today")
+    public ConcertResponse execute(@PathVariable("concert_id") String id) {
         return usecase.execute(id);
         
     }
